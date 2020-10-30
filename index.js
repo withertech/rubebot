@@ -9,7 +9,7 @@ client.on("message", async message => {
 	 if (command === "send") {
 	       let message2process = message.content.split(' ').splice(1).join(' ');
 
-	 	message.channel.send(message2process);
+	 	message.channel.send("Starting Machine");
                axios
   .post('https://discordapp.com/api/webhooks/771729790641766410/vCI5ZsibR7VXizkVlGsSVoZ_B5qt_xavhzOmqKx63KbNDYLnQqk7mWvkOFwVnTwBvTeC', {
     username: "Rube Goldberg",
