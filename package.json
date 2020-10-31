@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.0",
+    "basic-ftp": "^4.6.2",
     "discord.js": "^12.4.1",
     "dotenv": "^8.2.0"
   }

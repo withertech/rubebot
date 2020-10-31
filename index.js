@@ -1,6 +1,9 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const fs = require('fs')
 const axios = require('axios')
+const ftp = require("basic-ftp")
+
 require('dotenv').config({path: __dirname + '/.env'})
 client.on("message", async message => {
 	 var prefix = "!";
@@ -10,22 +13,32 @@ client.on("message", async message => {
 	       let message2process = message.content.split(' ').splice(1).join(' ');
 
 	 	message.channel.send("Starting Machine");
-               axios
-  .post('https://discordapp.com/api/webhooks/771729790641766410/vCI5ZsibR7VXizkVlGsSVoZ_B5qt_xavhzOmqKx63KbNDYLnQqk7mWvkOFwVnTwBvTeC', {
-    username: "Rube Goldberg",
-    avatar_url: "https://api.timeforkids.com/wp-content/uploads/2020/04/RubeGoldberg2.jpg?w=1155&h=891",
-    content: message2process
-  })
-  .then(res => {
-    console.log(`statusCode: ${res.statusCode}`)
-    console.log(res)
-  })
-  .catch(error => {
-    console.error(error)
-  })
-      }
-});
+		fs.writeFile('./message.txt', message2process, err => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  //file written successfully
+})
+	    const ftpclient = new ftp.Client()
+	 try {
+        await ftpclient.access({
+            host: "157.230.230.207",
+            user: "root",
+            password: "toor",
+            secure: false
+        });
+        await ftpclient.uploadFrom("message.txt", "message.txt");
+	    console.log(await ftpclient.list());
 
+
+    } catch(err) {
+	message.channel.send("```" + err + "```");	
+message.channel.send("the inator blew up");
+}
+	}
+
+}); 
 client.on("ready", () => {
 	client.user.setActivity("!send");
 
